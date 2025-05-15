@@ -12,6 +12,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 final class LocationController extends AbstractController
 {
+    // création d'un constructeur avec serializer pour le format json concernant la communication entre aplis
     public function __construct(
         private SerializerInterface $serializer
     ) {}
@@ -20,12 +21,9 @@ final class LocationController extends AbstractController
     public function index(
         LocationRepository $locationRepository
     ): Response {
-
+        // Requete sql pour afficher toutes les infos de l'entity location
         $location = $locationRepository->findAll();
-        // $coordinate = [
-        //     45.75985,
-        //     3.13153
-        // ];
+        // Transformtion en Json
         $locationJson = $this->serializer->serialize(
             $location,
             'json',

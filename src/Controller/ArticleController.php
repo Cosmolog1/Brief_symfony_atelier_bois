@@ -82,6 +82,11 @@ final class ArticleController extends AbstractController
         Request $request
     ): Response {
 
+        //Permet d'empecher de modifier un article qui nous appartiens pas l'accés via l'url (back)
+        if (!$article->getUser()->getId() !== $this->getUser()->getId()) {
+            return $this->redirectToRoute('home');
+        }
+
         $comment = new Comment();
 
         $form = $this->createForm(CommentTypeForm::class, $comment);
